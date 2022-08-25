@@ -25,6 +25,7 @@ public class TestBase {
     static void beforeAll() {
 
         Configuration.browserSize = null;
+        Configuration.timeout = 10000;
 
         switch (Project.config.deviceHost()) {
             case "emulate":

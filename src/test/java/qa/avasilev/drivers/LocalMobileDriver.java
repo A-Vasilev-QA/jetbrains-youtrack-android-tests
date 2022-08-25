@@ -35,6 +35,7 @@ public class LocalMobileDriver implements WebDriverProvider {
         options.setPlatformName("Android");
         options.setDeviceName(Project.config.device());
         options.setPlatformVersion(Project.config.osVersion());
+        //toDo: try another orientation
         options.setApp(app.getAbsolutePath());
         options.setAppPackage("com.jetbrains.youtrack.mobile.app");
         options.setAppActivity("com.jetbrains.youtrack.mobile.app.MainActivity");
@@ -43,19 +44,9 @@ public class LocalMobileDriver implements WebDriverProvider {
     }
 
     private File getApp() {
-        /*String appUrl = "https://github.com/wikimedia/apps-android-wikipedia/" +
-                "releases/download/latest/app-alpha-universal-release.apk";*/
         String appPath = "src/test/resources/app/YouTrack_v2022.3.1.apk";
 
-        File app = new File(appPath);
-       /* if (!app.exists()) {
-            try (InputStream in = new URL(appUrl).openStream()) {
-                copyInputStreamToFile(in, app);
-            } catch (IOException e) {
-                throw new AssertionError("Failed to download application", e);
-            }
-        }*/
-        return app;
+        return new File(appPath);
     }
 
 }

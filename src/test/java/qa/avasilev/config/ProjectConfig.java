@@ -18,7 +18,11 @@ public interface ProjectConfig extends Config {
     String osVersion();
     @DefaultValue("browserstack-build")
     String build();
-    String login();
+    String browserstackUsername();
+    String browserstackAccessKey();
+    String emailAddress();
     String password();
+    String serverUrl();
+
 
 }

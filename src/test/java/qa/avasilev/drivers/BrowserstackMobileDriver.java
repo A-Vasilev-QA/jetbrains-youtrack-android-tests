@@ -16,21 +16,23 @@ public class BrowserstackMobileDriver implements WebDriverProvider {
     public WebDriver createDriver(Capabilities capabilities) {
         MutableCapabilities mutableCapabilities = new MutableCapabilities();
         mutableCapabilities.merge(capabilities);
+
         // Set your access credentials
-        mutableCapabilities.setCapability("browserstack.user", Project.config.login());
-        mutableCapabilities.setCapability("browserstack.key", Project.config.password());
+        mutableCapabilities.setCapability("browserstack.user", Project.config.browserstackUsername());
+        mutableCapabilities.setCapability("browserstack.key", Project.config.browserstackAccessKey());
 
         // Set URL of the application under test
-        //mutableCapabilities.setCapability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c");
-        mutableCapabilities.setCapability("app", "bs://9979c840aafcda0127767656f8027522af902420");
+        mutableCapabilities.setCapability("app", "bs://d51675756582753eacb0195fd212d440aa56b8ef");
+
         // Specify device and os_version for testing
         mutableCapabilities.setCapability("device", Project.config.device());
         mutableCapabilities.setCapability("os_version", Project.config.osVersion());
 
         // Set other BrowserStack capabilities
-        mutableCapabilities.setCapability("project", "AVasilevQA mobile automation project ");
+        mutableCapabilities.setCapability("project", "JetBrains Youtrack mobile automation project by Aleksei Vasilev");
         mutableCapabilities.setCapability("build", Project.config.build());
         mutableCapabilities.setCapability("name", "Selenide Android final test");
+
         return new RemoteWebDriver(getBrowserstackUrl(), mutableCapabilities);
     }
 
