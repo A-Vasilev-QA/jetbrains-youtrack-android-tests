@@ -6,9 +6,7 @@ import io.appium.java_client.AppiumBy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import qa.avasilev.config.Project;
-import qa.avasilev.pages.IssuesPage;
-import qa.avasilev.pages.LoginPage;
-import qa.avasilev.pages.WelcomePage;
+import qa.avasilev.pages.*;
 
 
 import static com.codeborne.selenide.Selenide.*;
@@ -30,7 +28,6 @@ public class MainTest extends TestBase{
         WelcomePage welcomePage = new WelcomePage();
 
         welcomePage.enterServerUrl(Project.config.serverUrl());
-        //welcomePage.dealWithSync(Project.config.emailAddress());
 
         LoginPage loginPage = new LoginPage();
 
@@ -39,8 +36,42 @@ public class MainTest extends TestBase{
         IssuesPage issuesPage = new IssuesPage();
 
         assertTrue(issuesPage.isOpened());
-        assertNotEquals(0, issuesPage.countRows());
-        System.out.println(issuesPage.countRows());
 
+        /*assertNotEquals(0, issuesPage.countRows());
+        System.out.println(issuesPage.countRows());*/
+
+    }
+
+    @Test
+    void countRowsTest() {
+
+    }
+
+    @Test
+    void checkScreensTest() {
+        WelcomePage welcomePage = new WelcomePage();
+        welcomePage.enterServerUrl(Project.config.serverUrl());
+
+        LoginPage loginPage = new LoginPage();
+        loginPage.login(Project.config.emailAddress(), Project.config.password());
+
+        IssuesPage issuesPage = new IssuesPage();
+        assertTrue(issuesPage.isOpened());
+        issuesPage.openAgile();
+
+        AgilePage agilePage = new AgilePage();
+        assertTrue(agilePage.isOpened());
+        agilePage.openNotifications();
+
+        NotificationsPage notificationsPage = new NotificationsPage();
+        assertTrue(notificationsPage.isOpened());
+        notificationsPage.openKnowledgeBase();
+
+        KnowledgeBasePage knowledgeBasePage = new KnowledgeBasePage();
+        assertTrue(knowledgeBasePage.isOpened());
+        knowledgeBasePage.openSettings();
+
+        SettingsPage settingsPage = new SettingsPage();
+        assertTrue(settingsPage.isOpened());
     }
 }

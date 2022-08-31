@@ -21,8 +21,7 @@ import static java.lang.String.format;
 public class IssuesPage extends AbstractPage {
 
     private SelenideElement searchField = $(AppiumBy.id("test:id/query-assist-input"));
-    private SelenideElement issuesCount =
-            $(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"issuesCount\"]/*[1]")); //$(AppiumBy.accessibilityId("issuesCount"));
+    private SelenideElement issuesCount = $(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"issuesCount\"]/*[1]")); //$(AppiumBy.accessibilityId("issuesCount"));
     private SelenideElement sortBy = $(AppiumBy.id("test:id/issuesSortBy"));
 
     private String issueRowSelector = "(//android.view.ViewGroup[@content-desc=\"issue-row\"])";
@@ -30,7 +29,7 @@ public class IssuesPage extends AbstractPage {
 
 
     public boolean isOpened() {
-        sleep(3000);
+        searchField.shouldBe(visible);
         return (searchField.is(visible));
     }
 
