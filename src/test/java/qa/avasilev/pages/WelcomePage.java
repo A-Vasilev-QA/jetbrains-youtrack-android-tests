@@ -10,19 +10,10 @@ public class WelcomePage {
 
     private SelenideElement serverUrlField = $(AppiumBy.id("test:id/server-url"));
     private SelenideElement nextButton = $(AppiumBy.id("test:id/next"));
-    private SelenideElement noThanksButton = $(AppiumBy.id("com.android.chrome:id/negative_button"));
-    private SelenideElement emailAddress = $(AppiumBy.id("com.android.chrome:id/account_text_secondary"));
-
-
 
     public void enterServerUrl(String serverUrl) {
         serverUrlField.shouldBe(visible).sendKeys(serverUrl);
         nextButton.shouldBe(enabled).click();
-    }
-
-    public void dealWithSync(String email) {
-        emailAddress.shouldHave(text(email));
-        noThanksButton.click();
     }
 
 

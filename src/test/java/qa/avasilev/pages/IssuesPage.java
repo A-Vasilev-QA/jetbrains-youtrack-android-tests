@@ -1,18 +1,11 @@
 package qa.avasilev.pages;
 
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.SelenideWait;
 import io.appium.java_client.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.touch.TouchActions;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -25,7 +18,9 @@ public class IssuesPage extends AbstractPage {
     private SelenideElement sortBy = $(AppiumBy.id("test:id/issuesSortBy"));
 
     private String issueRowSelector = "(//android.view.ViewGroup[@content-desc=\"issue-row\"])";
-    private ArrayList<String> taskNames = new ArrayList<>();
+    private HashSet<String> issueNumbers = new HashSet<>();
+
+    public Integer issuesOnTheScreen = $$(AppiumBy.xpath(issueRowSelector)).size();
 
 
     public boolean isOpened() {
@@ -35,20 +30,52 @@ public class IssuesPage extends AbstractPage {
 
     public Integer countRows() {
 
-        actions().clickAndHold($(AppiumBy.xpath(issueRowSelector + "[6]")))
-                .moveToElement($(AppiumBy.xpath(issueRowSelector + "[1]")))
+        String lastIssue = $$(AppiumBy.xpath(issueRowSelector + "/*/*[2]")).first().text();
+
+        while (!lastIssue.equals($$(AppiumBy.xpath(issueRowSelector + "/*/*[2]")).last().text())) {
+            lastIssue = $$(AppiumBy.xpath(issueRowSelector + "/*/*[2]")).last().text();
+
+            for (SelenideElement i:$$(AppiumBy.xpath(issueRowSelector + "/*/*[2]"))) {
+                if (!i.text().equals("")) {
+                    issueNumbers.add(i.text());
+                }
+            }
+
+            actions().clickAndHold($$(AppiumBy.xpath(issueRowSelector)).last())
+                .moveByOffset(0, -500)
                 .release()
                 .perform();
-        for (int i = 1; i <= $$(AppiumBy.xpath(issueRowSelector)).size(); i++) {
-            System.out.println($(AppiumBy.xpath(format(issueRowSelector + "[%d]/*/*[2]", i))).text());
-            taskNames.add($(AppiumBy.xpath(format(issueRowSelector + "[%d]/*/*[2]", i))).text());
         }
-        System.out.println(taskNames.size());
-        return $$(AppiumBy.xpath(issueRowSelector)).size();
+
+        System.out.println(issueNumbers.size());
+        return issueNumbers.size();
+    }
+
+    public String issueIdByNumber(Integer number) throws Exception {
+
+        if (number >= $$(AppiumBy.xpath(issueRowSelector)).size()) { //currently, works only with tasks on the screen
+            throw new Exception("Open task by number is not possible: Number is bigger than number of tasks on the screen");
+        }
+
+        return $$(AppiumBy.xpath(issueRowSelector + "/*/*[2]")).get(number).text();
+
+    }
+
+    public String checkIssuePageHeaderByNumber(Integer number) throws Exception {
+
+        if (number >= $$(AppiumBy.xpath(issueRowSelector)).size()) { //currently, works only with tasks on the screen
+            throw new Exception("Open task by number is not possible: Number is bigger than number of tasks on the screen");
+        }
+
+        $$(AppiumBy.xpath(issueRowSelector)).get(number).click();
+
+        $(AppiumBy.xpath("//*[@resource-id=\"issue-id\"]")).shouldBe(visible);
+        return $(AppiumBy.xpath("//*[@resource-id=\"issue-id\"]")).text();
+
     }
 
     public boolean countedIssuesAreCorrect() {
-        return countRows().toString().equals(issuesCount.text().substring(0, issuesCount.text().indexOf(' ')));
+        return issuesCount.text().substring(0, issuesCount.text().indexOf(' ')).equals(countRows().toString());
     }
 
 }

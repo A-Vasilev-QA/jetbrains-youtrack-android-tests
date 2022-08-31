@@ -1,59 +1,35 @@
 package qa.avasilev.tests;
 
-
-import com.codeborne.selenide.SelenideElement;
-import io.appium.java_client.AppiumBy;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import qa.avasilev.config.Project;
 import qa.avasilev.pages.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.CollectionCondition.*;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-public class MainTest extends TestBase{
-
-    @Test
-    void openTest() {
-        $$(AppiumBy.xpath("//*")).shouldHave(sizeGreaterThan(0));
-    }
-
+public class MainTest extends TestBase {
 
     @Test
     void loginTest() {
 
-        WelcomePage welcomePage = new WelcomePage();
-
-        welcomePage.enterServerUrl(Project.config.serverUrl());
-
-        LoginPage loginPage = new LoginPage();
-
-        loginPage.login(Project.config.emailAddress(), Project.config.password());
+        login();
 
         IssuesPage issuesPage = new IssuesPage();
-
         assertTrue(issuesPage.isOpened());
-
-        /*assertNotEquals(0, issuesPage.countRows());
-        System.out.println(issuesPage.countRows());*/
-
     }
 
     @Test
     void countRowsTest() {
 
+        login();
+
+        IssuesPage issuesPage = new IssuesPage();
+        assertTrue(issuesPage.isOpened());
+        assertTrue(issuesPage.countedIssuesAreCorrect());
     }
 
     @Test
     void checkScreensTest() {
-        WelcomePage welcomePage = new WelcomePage();
-        welcomePage.enterServerUrl(Project.config.serverUrl());
 
-        LoginPage loginPage = new LoginPage();
-        loginPage.login(Project.config.emailAddress(), Project.config.password());
+        login();
 
         IssuesPage issuesPage = new IssuesPage();
         assertTrue(issuesPage.isOpened());
@@ -73,5 +49,13 @@ public class MainTest extends TestBase{
 
         SettingsPage settingsPage = new SettingsPage();
         assertTrue(settingsPage.isOpened());
+    }
+
+    @Test
+    void checkFirstIssueTest() throws Exception {
+        login();
+        IssuesPage issuesPage = new IssuesPage();
+        assertTrue(issuesPage.isOpened());
+        assertEquals(issuesPage.issueIdByNumber(0), issuesPage.checkIssuePageHeaderByNumber(0));
     }
 }

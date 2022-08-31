@@ -11,6 +11,7 @@ public class KnowledgeBasePage extends AbstractPage {
     private SelenideElement searchField = $(AppiumBy.id("test:id/knowledge-base-search-panel"));
 
     public boolean isOpened() {
+        searchField.shouldBe(visible);
         return searchField.is(visible);
     }
 }

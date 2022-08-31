@@ -11,6 +11,7 @@ public class SettingsPage extends AbstractPage {
     private SelenideElement jetBrainsLink = $(AppiumBy.xpath("//*[@text=\"jetbrains.com/youtrack\"]"));
 
     public boolean isOpened() {
+        jetBrainsLink.shouldBe(visible);
         return jetBrainsLink.is(visible);
     }
 

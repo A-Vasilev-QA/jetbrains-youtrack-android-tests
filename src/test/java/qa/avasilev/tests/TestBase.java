@@ -10,6 +10,8 @@ import qa.avasilev.config.Project;
 import qa.avasilev.drivers.BrowserstackMobileDriver;
 import qa.avasilev.drivers.LocalMobileDriver;
 import qa.avasilev.helpers.Attach;
+import qa.avasilev.pages.LoginPage;
+import qa.avasilev.pages.WelcomePage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.logevents.SelenideLogger.addListener;
@@ -20,6 +22,19 @@ import static qa.avasilev.helpers.Attach.sessionId;
 public class TestBase {
 
     private static boolean videoEnabled;
+
+    public void login() {
+
+        step("Enter server URL on the welcome page", () -> {
+            WelcomePage welcomePage = new WelcomePage();
+            welcomePage.enterServerUrl(Project.config.serverUrl());
+        });
+
+        step("Enter credentials on Login page", () -> {
+            LoginPage loginPage = new LoginPage();
+            loginPage.login(Project.config.emailAddress(), Project.config.password());
+        });
+    }
 
     @BeforeAll
     static void beforeAll() {

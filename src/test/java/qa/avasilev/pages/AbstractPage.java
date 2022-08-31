@@ -13,13 +13,8 @@ public abstract class AbstractPage {
     private SelenideElement knowledgeBaseMenuItem = $(AppiumBy.xpath("//*[@resource-id=\"menuKnowledgeBase\"]"));
     private SelenideElement settingsMenuItem = $(AppiumBy.id("test:id/menuSettings"));
 
-    private void skipLoadingScreen() {
-        $(AppiumBy.xpath("//*[@clickable=\"false\"]")).click();
-    }
-
     public void openIssuesScreen() {
         issuesMenuItem.click();
-        skipLoadingScreen();
     }
 
     public void openAgile() {
@@ -28,16 +23,13 @@ public abstract class AbstractPage {
 
     public void openNotifications() {
         notificationsMenuItem.click();
-        skipLoadingScreen();
     }
 
     public void openKnowledgeBase() {
         knowledgeBaseMenuItem.click();
-        skipLoadingScreen();
     }
 
     public void openSettings() {
         settingsMenuItem.click();
-        skipLoadingScreen();
     }
 }
