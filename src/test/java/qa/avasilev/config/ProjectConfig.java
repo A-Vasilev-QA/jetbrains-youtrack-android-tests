@@ -10,7 +10,7 @@ import org.aeonbits.owner.Config;
 })
 public interface ProjectConfig extends Config {
 
-    @DefaultValue ("emulate")
+    @DefaultValue ("browserstack")
     String deviceHost();
     @DefaultValue("Google Pixel 4")
     String device();
