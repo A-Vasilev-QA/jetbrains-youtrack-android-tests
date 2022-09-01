@@ -6,7 +6,6 @@ import io.appium.java_client.*;
 
 import java.util.HashSet;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
@@ -20,12 +19,14 @@ public class IssuesPage extends AbstractPage {
     private String issueRowSelector = "(//android.view.ViewGroup[@content-desc=\"issue-row\"])";
     private HashSet<String> issueNumbers = new HashSet<>();
 
-    public Integer issuesOnTheScreen = $$(AppiumBy.xpath(issueRowSelector)).size();
-
 
     public boolean isOpened() {
         searchField.shouldBe(visible);
         return (searchField.is(visible));
+    }
+
+    public void closePopup() {
+
     }
 
     public Integer countRows() {
@@ -51,10 +52,11 @@ public class IssuesPage extends AbstractPage {
         return issueNumbers.size();
     }
 
-    public String issueIdByNumber(Integer number) throws Exception {
+    public String getIssueIdByNumber(Integer number) throws Exception {
 
         if (number >= $$(AppiumBy.xpath(issueRowSelector)).size()) { //currently, works only with tasks on the screen
-            throw new Exception("Open task by number is not possible: Number is bigger than number of tasks on the screen");
+            throw new Exception("Open task by number is not possible: " +
+                    "Number is bigger than number of tasks on the screen");
         }
 
         return $$(AppiumBy.xpath(issueRowSelector + "/*/*[2]")).get(number).text();
@@ -64,7 +66,8 @@ public class IssuesPage extends AbstractPage {
     public String checkIssuePageHeaderByNumber(Integer number) throws Exception {
 
         if (number >= $$(AppiumBy.xpath(issueRowSelector)).size()) { //currently, works only with tasks on the screen
-            throw new Exception("Open task by number is not possible: Number is bigger than number of tasks on the screen");
+            throw new Exception("Open task by number is not possible: " +
+                    "Number is bigger than number of tasks on the screen");
         }
 
         $$(AppiumBy.xpath(issueRowSelector)).get(number).click();
@@ -75,7 +78,8 @@ public class IssuesPage extends AbstractPage {
     }
 
     public boolean countedIssuesAreCorrect() {
-        return issuesCount.text().substring(0, issuesCount.text().indexOf(' ')).equals(countRows().toString());
+        return issuesCount.text().substring(0, issuesCount.text().indexOf(' '))
+                .equals(countRows().toString());
     }
 
 }

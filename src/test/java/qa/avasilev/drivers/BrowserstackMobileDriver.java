@@ -31,7 +31,7 @@ public class BrowserstackMobileDriver implements WebDriverProvider {
         // Set other BrowserStack capabilities
         mutableCapabilities.setCapability("project", "JetBrains Youtrack mobile automation project by Aleksei Vasilev");
         mutableCapabilities.setCapability("build", Project.config.build());
-        mutableCapabilities.setCapability("name", "Selenide Android final test");
+        mutableCapabilities.setCapability("name", "Youtrack Android test");
 
         return new RemoteWebDriver(getBrowserstackUrl(), mutableCapabilities);
     }

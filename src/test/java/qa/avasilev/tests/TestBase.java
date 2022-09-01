@@ -2,6 +2,7 @@ package qa.avasilev.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import io.appium.java_client.AppiumBy;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +14,7 @@ import qa.avasilev.helpers.Attach;
 import qa.avasilev.pages.LoginPage;
 import qa.avasilev.pages.WelcomePage;
 
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.logevents.SelenideLogger.addListener;
 import static io.qameta.allure.Allure.step;
@@ -34,6 +36,12 @@ public class TestBase {
             LoginPage loginPage = new LoginPage();
             loginPage.login(Project.config.emailAddress(), Project.config.password());
         });
+
+        if (Project.config.deviceHost().equals("browserstack")) {
+            step("", ()-> {
+                $(AppiumBy.xpath("//*[@resource-id=\"android:id/button1\"]")).click();
+            });
+        }
     }
 
     @BeforeAll
