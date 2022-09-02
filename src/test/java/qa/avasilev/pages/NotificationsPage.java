@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class NotificationsPage extends AbstractPage {
 
-    private SelenideElement noNotificationsMessage = $(AppiumBy.xpath("//*[@resource-id=\"no-notifications\"]"));
+    private final SelenideElement noNotificationsMessage = $(AppiumBy.xpath("//*[@resource-id=\"no-notifications\"]"));
 
     public boolean isOpened() {
         noNotificationsMessage.shouldBe(visible);

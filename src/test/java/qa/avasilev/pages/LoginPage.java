@@ -7,10 +7,10 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
 
-    private SelenideElement usernameField = $(AppiumBy.xpath("//android.widget.EditText[@resource-id=\"username\"]"));
-    private SelenideElement passwordField = $(AppiumBy.xpath("//android.widget.EditText[@resource-id=\"password\"]"));
-    private SelenideElement rememberMeCheckbox = $(AppiumBy.className("android.widget.CheckBox"));
-    private SelenideElement enterButton = $(AppiumBy.className("android.widget.Button"));
+    private final SelenideElement usernameField = $(AppiumBy.xpath("//android.widget.EditText[@resource-id=\"username\"]"));
+    private final SelenideElement passwordField = $(AppiumBy.xpath("//android.widget.EditText[@resource-id=\"password\"]"));
+    private final SelenideElement rememberMeCheckbox = $(AppiumBy.className("android.widget.CheckBox"));
+    private final SelenideElement enterButton = $(AppiumBy.className("android.widget.Button"));
 
 
     public void login(String username, String password) {

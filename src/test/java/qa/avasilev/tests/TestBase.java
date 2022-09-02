@@ -25,25 +25,6 @@ public class TestBase {
 
     private static boolean videoEnabled;
 
-    public void login() {
-
-        step("Enter server URL on the welcome page", () -> {
-            WelcomePage welcomePage = new WelcomePage();
-            welcomePage.enterServerUrl(Project.config.serverUrl());
-        });
-
-        step("Enter credentials on Login page", () -> {
-            LoginPage loginPage = new LoginPage();
-            loginPage.login(Project.config.emailAddress(), Project.config.password());
-        });
-
-        if (Project.config.deviceHost().equals("browserstack")) {
-            step("", ()-> {
-                $(AppiumBy.xpath("//*[@resource-id=\"android:id/button1\"]")).click();
-            });
-        }
-    }
-
     @BeforeAll
     static void beforeAll() {
 
@@ -59,6 +40,25 @@ public class TestBase {
                 Configuration.browser = BrowserstackMobileDriver.class.getName();
                 videoEnabled = true;
                 break;
+        }
+    }
+
+    public void login() {
+
+        step("Enter server URL on the welcome page", () -> {
+            WelcomePage welcomePage = new WelcomePage();
+            welcomePage.enterServerUrl(Project.config.serverUrl());
+        });
+
+        step("Enter credentials on Login page", () -> {
+            LoginPage loginPage = new LoginPage();
+            loginPage.login(Project.config.emailAddress(), Project.config.password());
+        });
+
+        if (Project.config.deviceHost().equals("browserstack")) {
+            step("Close popup", () -> {
+                $(AppiumBy.xpath("//*[@resource-id=\"android:id/button1\"]")).click();
+            });
         }
     }
 

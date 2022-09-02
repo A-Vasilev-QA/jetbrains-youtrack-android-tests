@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class KnowledgeBasePage extends AbstractPage {
 
-    private SelenideElement searchField = $(AppiumBy.id("test:id/knowledge-base-search-panel"));
+    private final SelenideElement searchField = $(AppiumBy.id("test:id/knowledge-base-search-panel"));
 
     public boolean isOpened() {
         searchField.shouldBe(visible);

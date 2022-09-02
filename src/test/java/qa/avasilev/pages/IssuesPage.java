@@ -2,31 +2,27 @@ package qa.avasilev.pages;
 
 
 import com.codeborne.selenide.SelenideElement;
-import io.appium.java_client.*;
+import io.appium.java_client.AppiumBy;
 
 import java.util.HashSet;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
-import static java.lang.String.format;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class IssuesPage extends AbstractPage {
 
-    private SelenideElement searchField = $(AppiumBy.id("test:id/query-assist-input"));
-    private SelenideElement issuesCount = $(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"issuesCount\"]/*[1]")); //$(AppiumBy.accessibilityId("issuesCount"));
-    private SelenideElement sortBy = $(AppiumBy.id("test:id/issuesSortBy"));
+    private final SelenideElement searchField = $(AppiumBy.id("test:id/query-assist-input"));
+    private final SelenideElement issuesCount = $(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"issuesCount\"]/*[1]")); //$(AppiumBy.accessibilityId("issuesCount"));
+    private final SelenideElement sortBy = $(AppiumBy.id("test:id/issuesSortBy"));
 
-    private String issueRowSelector = "(//android.view.ViewGroup[@content-desc=\"issue-row\"])";
-    private HashSet<String> issueNumbers = new HashSet<>();
+    private final String issueRowSelector = "(//android.view.ViewGroup[@content-desc=\"issue-row\"])";
+    private final HashSet<String> issueNumbers = new HashSet<>();
 
 
     public boolean isOpened() {
         searchField.shouldBe(visible);
         return (searchField.is(visible));
-    }
-
-    public void closePopup() {
-
     }
 
     public Integer countRows() {
@@ -36,19 +32,14 @@ public class IssuesPage extends AbstractPage {
         while (!lastIssue.equals($$(AppiumBy.xpath(issueRowSelector + "/*/*[2]")).last().text())) {
             lastIssue = $$(AppiumBy.xpath(issueRowSelector + "/*/*[2]")).last().text();
 
-            for (SelenideElement i:$$(AppiumBy.xpath(issueRowSelector + "/*/*[2]"))) {
+            for (SelenideElement i : $$(AppiumBy.xpath(issueRowSelector + "/*/*[2]"))) {
                 if (!i.text().equals("")) {
                     issueNumbers.add(i.text());
                 }
             }
-
-            actions().clickAndHold($$(AppiumBy.xpath(issueRowSelector)).last())
-                .moveByOffset(0, -500)
-                .release()
-                .perform();
+            scrollForward();
         }
 
-        System.out.println(issueNumbers.size());
         return issueNumbers.size();
     }
 
@@ -69,7 +60,7 @@ public class IssuesPage extends AbstractPage {
             throw new Exception("Open task by number is not possible: " +
                     "Number is bigger than number of tasks on the screen");
         }
-
+        //todo:update for whole screen
         $$(AppiumBy.xpath(issueRowSelector)).get(number).click();
 
         $(AppiumBy.xpath("//*[@resource-id=\"issue-id\"]")).shouldBe(visible);

@@ -9,10 +9,10 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class AgilePage extends AbstractPage {
 
-    private SelenideElement searchField = $(AppiumBy.id("test:id/query-assist-input"));
+    private final SelenideElement searchField = $(AppiumBy.id("test:id/query-assist-input"));
 
-    private String agileRowHeaderSelector = "(//*[@content-desc=\"agile-row-header\"])";
-    private String agileCardSelector = "(//*[@resource-id=\"card-simple-issue-id\"])";
+    private final String agileRowHeaderSelector = "(//*[@content-desc=\"agile-row-header\"])";
+    private final String agileCardSelector = "(//*[@resource-id=\"card-simple-issue-id\"])";
 
     public boolean isOpened() {
         $$(AppiumBy.xpath(agileRowHeaderSelector)).first().shouldBe(visible);
