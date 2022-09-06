@@ -50,7 +50,7 @@ public class MainTest extends TestBase {
             assertTrue(agilePage.isOpened());
         });
 
-        step("Open Agile Page", agilePage::openNotifications);
+        step("Open Notification Page", agilePage::openNotifications);
 
         NotificationsPage notificationsPage = new NotificationsPage();
 
@@ -66,7 +66,7 @@ public class MainTest extends TestBase {
             assertTrue(knowledgeBasePage.isOpened());
         });
 
-        step("Open Knowledge Base Page", knowledgeBasePage::openSettings);
+        step("Open Settings Page", knowledgeBasePage::openSettings);
 
         SettingsPage settingsPage = new SettingsPage();
 
