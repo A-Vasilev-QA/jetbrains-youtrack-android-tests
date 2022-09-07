@@ -1,13 +1,13 @@
-#Tests for Jetbrains Youtrack Android aplication 
+# Tests for Jetbrains Youtrack Android aplication 
 https://github.com/JetBrains/youtrack-mobile
 
-#Jenkins job
+# Jenkins job
 https://jenkins.autotests.cloud/job/C12-AVasilevQA-Diploma-mobile/
 
 Also can be used for local tests with emulator or real device
 
-#USAGE examples
-For tests execution just run the Jenkins job with needed parameters.
+# USAGE examples
+#### For tests execution just run the Jenkins job with needed parameters.
 
 Another way
 
