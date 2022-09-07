@@ -11,7 +11,7 @@ Also can be used for local tests with emulator or real device
 
 Another way
 
-Really, you don't need it. You won't fill the data correct, just use the Jenkins job.
+Really, you don't need it. You won't fill the data correctly, just use the Jenkins job.
 
 OK, other way: run remote tests - fill remote.properties or to pass value:
 device (default "Google Pixel 4"")
